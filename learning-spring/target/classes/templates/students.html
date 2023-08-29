@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Student List</title>
+</head>
+<body>
+    <h1>Student List</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Score</th>
+                <!-- Add other columns if needed -->
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="student : ${students}">
+                <td th:text="${student.rank}"></td>
+                <td th:text="${student.name}"></td>
+                <td th:text="${student.score}"></td>
+                <!-- Add other columns if needed -->
+                <td>
+                    <form th:action="@{/delete}" method="post">
+                        <input type="hidden" name="name" th:value="${student.name}" />
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Add New Student</h2>
+    <form th:action="@{/add}" method="post" th:object="${newStudent}">
+        <label>Name: <input type="text" th:field="*{name}" /></label>
+        <label>Score: <input type="number" th:field="*{score}" /></label>
+        <button type="submit">Add</button>
+    </form>
+</body>
+</html>
